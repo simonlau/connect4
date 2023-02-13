@@ -31,16 +31,16 @@ function clickScoreButton() {
   renderAll();
 }
 
-const A = [3, 1, 5, 0];
-let answer = -1;
-//? element pos > 3 -> 2
-for (let i = 0; i < A.length; i++) {
-  const element = A[i];
-  if (element > 3) {
-    answer = i;
-    break;
-  }
-}
+// const A = [3, 1, 5, 0];
+// let answer = -1;
+// //? element pos > 3 -> 2
+// for (let i = 0; i < A.length; i++) {
+//   const element = A[i];
+//   if (element > 3) {
+//     answer = i;
+//     break;
+//   }
+// }
 // console.log(answer); // -> 2
 function changePlayerTurn() {
   if (game.playerTurn === "0") {
@@ -61,9 +61,9 @@ function checkPlayerTurnStartingFrom0() {
   console.log(game.playerTurn === "1");
 }
 
-function clickDropButton() {
+const clickDropButton = (col) => () => {
   console.log("drop");
-  const col = 0;
+  // const col = 0;
 
   for (let i = 0; i < GAME_WIDTH; i++) {
     const pos = GAME_WIDTH - i - 1;
@@ -75,7 +75,7 @@ function clickDropButton() {
   changePlayerTurn();
 
   renderAll();
-}
+};
 
 /*----- functions -----*/
 function renderScreen() {
@@ -113,8 +113,10 @@ function main() {
   const scoreButton = document.querySelector("#scoreButton");
   scoreButton.addEventListener("click", clickScoreButton);
 
-  const dropButton = document.querySelector(".drop");
-  dropButton.addEventListener("click", clickDropButton);
+  const dropButton = document.querySelectorAll(".drop");
+  for (let i = 0; i < GAME_WIDTH; i++) {
+    dropButton[i].addEventListener("click", clickDropButton(i));
+  }
   renderAll();
 }
 
