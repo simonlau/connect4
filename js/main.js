@@ -1,4 +1,3 @@
-console.log("connect4");
 /*----- constants -----*/
 
 /*----- state variables -----*/
