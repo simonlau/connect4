@@ -1,10 +1,11 @@
 /*----- constants -----*/
-
+GAME_WIDTH = 4;
 /*----- state variables -----*/
 const game = {
   screen: "game",
   board: [
-    ["0", "?", "?", "?"],
+    //* array of arrays
+    ["0", "?", "1", "?"], //? board[0]
     ["?", "?", "1", "?"],
     ["?", "0", "?", "?"],
     ["1", "0", "1", "?"],
@@ -39,9 +40,19 @@ function renderScreen() {
   screen.classList.remove("hide");
 }
 
-function buildBoardRow() {}
+function renderBoard() {
+  board.textContent = ""; //? empty the previous one
+  for (let i = 0; i < GAME_WIDTH; i++) {
+    const tr = document.createElement("tr");
 
-function renderBoard() {}
+    for (let j = 0; j < GAME_WIDTH; j++) {
+      const td = document.createElement("td");
+      td.innerText = game.board[i][j];
+      tr.appendChild(td);
+    }
+    board.appendChild(tr);
+  }
+}
 
 function renderAll() {
   renderScreen();
