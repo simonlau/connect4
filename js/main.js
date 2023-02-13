@@ -3,10 +3,11 @@ GAME_WIDTH = 4;
 /*----- state variables -----*/
 const game = {
   screen: "game",
+  playerTurn: "0",
   board: [
     //* array of arrays
-    ["0", "?", "1", "?"], //? board[0]
-    ["?", "?", "1", "?"],
+    ["?", "?", "?", "?"], //? board[0]
+    ["?", "?", "?", "?"],
     ["?", "0", "?", "?"],
     ["1", "0", "1", "?"],
   ],
@@ -27,6 +28,52 @@ function clickStartButton() {
 
 function clickScoreButton() {
   game.screen = "score";
+  renderAll();
+}
+
+const A = [3, 1, 5, 0];
+let answer = -1;
+//? element pos > 3 -> 2
+for (let i = 0; i < A.length; i++) {
+  const element = A[i];
+  if (element > 3) {
+    answer = i;
+    break;
+  }
+}
+// console.log(answer); // -> 2
+function changePlayerTurn() {
+  if (game.playerTurn === "0") {
+    game.playerTurn = "1";
+  } else {
+    game.playerTurn = "0";
+  }
+}
+
+function checkPlayerTurnStartingFrom0() {
+  //? setup
+  game.playerTurn = "0";
+
+  //? testing this function
+  changePlayerTurn();
+
+  //? eyeball check
+  console.log(game.playerTurn === "1");
+}
+
+function clickDropButton() {
+  console.log("drop");
+  const col = 0;
+
+  for (let i = 0; i < GAME_WIDTH; i++) {
+    const pos = GAME_WIDTH - i - 1;
+    if (game.board[pos][col] === "?") {
+      game.board[pos][col] = game.playerTurn;
+      break;
+    }
+  }
+  changePlayerTurn();
+
   renderAll();
 }
 
@@ -65,6 +112,9 @@ function main() {
 
   const scoreButton = document.querySelector("#scoreButton");
   scoreButton.addEventListener("click", clickScoreButton);
+
+  const dropButton = document.querySelector(".drop");
+  dropButton.addEventListener("click", clickDropButton);
   renderAll();
 }
 
